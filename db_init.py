@@ -21,10 +21,10 @@ class Station(Base):
     contract_name = Column(String(100), nullable=False)
 
 # Init the database connection.
-# For the local databsae test.
+# For the local database test.
 #engine = create_engine('mysql+pymysql://root:hanpeisong@localhost:3306/dbbikes')
 # For the RDS
-engine = create_engine('mysql+pymysql://hanpeisong:hanpeisong@dbbikes.cigtojcdjbjk.eu-west-1.rds.amazonaws.com:3306/dbbikes')
+engine = create_engine('mysql+pymysql://root:hanpeisong@dbbikes.cw9hkqmrhrqy.eu-west-1.rds.amazonaws.com:3306/dbbikes')
 
 # Drop all the tables
 Base.metadata.drop_all(engine, checkfirst=True)
