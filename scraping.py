@@ -24,11 +24,16 @@ def stations_to_db(data):
     print(type(stations),len(stations))
     for station in stations:
         print(station)
-        vals=(int(station.get('number')),station.get('contract_name'),
-              station.get('name'),station.get('address'),
-              station.get('position').get('lat'),station.get('position').get('lng'),
-              int(station.get('banking')),int(station.get('bonus')),
-              #station.get('bike_stands'),station.get('status')
+        vals=(int(station.get('number')),
+              station.get('name'),
+              station.get('address'),
+              station.get('position').get('lat'),
+              station.get('position').get('lng'),
+              int(station.get('banking')),
+              int(station.get('bonus')),
+              station.get('contract_name'),
+              #station.get('bike_stands'),
+              # station.get('status')
              )
         engine.execute("insert into station values(%s,%s,%s,%s,%s,%s,%s,%s)",vals)
 
