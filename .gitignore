@@ -1,2 +1,4 @@
 #Pycharm configuration files
 .idea/
+__pycache__/
+
