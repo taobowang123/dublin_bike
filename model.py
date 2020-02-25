@@ -25,7 +25,7 @@ class Bike(Base):
     # The structure of the table.
     id = Column(Integer, primary_key=True, autoincrement=True)
     station_id = Column(Integer, ForeignKey('station.id'))
-    status = Column(Boolean, nullable=False)
+    status = Column(String(50), nullable=False)
     bike_stands = Column(Integer, nullable=False)
     available_bike_stands = Column(Integer, nullable=False)
     available_bikes = Column(Integer, nullable=False)
