@@ -10,7 +10,7 @@ print("Created Tables")
 
 # Init the station data.
 contract_name = 'Dublin'
-data = json.load(open('static/station.json'))
+data = json.load(open('static/dublin_bike_static.json'))
 
 for station in data:
     kwargs = {'id': station['number'],
