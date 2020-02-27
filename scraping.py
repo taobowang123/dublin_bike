@@ -58,10 +58,18 @@ def stations_to_db(data):
 
 def weather_to_db(data):
     weathers = json.loads(data)
-    print(type(weathers), len(weathers))
+    print(type(stations), len(stations))
     for weather in weather:
-        print(weather)
-        vals = (weather.get('coord_lon'),
+        timestamp = weathers.get('dt')
+        time_standard = timestamp_convert(timestamp)
+        kwargs ={
+            'coord_lon':weather.get('coord').get('lon'),
+            'coord_lat':weather.get('coord').get('lon'),
+
+
+
+
+        } (weather.get('coord_lon'),
                 weather.get('coord_lat'),
                 weather.get('weather_id'),
                 weather.get('weather_main'),
@@ -102,7 +110,10 @@ def timestamp_convert(timestamp):
         timeStamp = str(timestamp)[:-3]
         localTime = time.localtime(int(timeStamp))
         strTime = time.strftime("%Y-%m-%d %H:%M:%S", localTime)
-        return strTime
+    if len(str(timestamp))==10:
+        localTime = time.localtime(int(timeStamp))
+        strTime = time.strftime("%Y-%m-%d %H:%M:%S", localTime)
+    return strTime
 
 
 class RepeatingTimer(threading.Timer):
@@ -113,7 +124,7 @@ class RepeatingTimer(threading.Timer):
 
 
 api_key_bikes = "0bef7f2fab41ef8a396b1e3ab0c929ac8138e3e1"
-api_key_weather = ""
+api_key_weather = "cef2a44a33227fe85d0eb0430c4b0d40"
 # setting the scraper on a timer - every five second
 bike = RepeatingTimer(300.0, scraping_bikes, args=[api_key_bikes])
 weather = RepeatingTimer(300.0, api_key_weather, args=[api_key_bikes])
