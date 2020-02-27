@@ -24,7 +24,7 @@ class Bike(Base):
     __tablename__ = "bike"
     # The structure of the table.
     id = Column(Integer, primary_key=True, autoincrement=True)
-    station_id = Column(Integer, ForeignKey('station.id'))
+    station_id = Column(Integer) # foreign key problem
     status = Column(String(50), nullable=False)
     bike_stands = Column(Integer, nullable=False)
     available_bike_stands = Column(Integer, nullable=False)
