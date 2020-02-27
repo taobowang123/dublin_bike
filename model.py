@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Float, Boolean, create_engine, ForeignKey, DateTime
+from sqlalchemy import Column, Integer, String, Float, Boolean, create_engine, ForeignKey, DateTime, inspect
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 
@@ -72,8 +72,8 @@ class Weather(Base):
 engine = create_engine('mysql+pymysql://root:hanpeisong@dbbikes.cw9hkqmrhrqy.eu-west-1.rds.amazonaws.com:3306/dbbikes')
 
 # Create the type of DBSession.
-DBSession = sessionmaker(bind=engine)
+Session = sessionmaker(bind=engine)
 
 # Create the session object.
-session = DBSession()
+session = Session()
 
