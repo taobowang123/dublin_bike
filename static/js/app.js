@@ -24,28 +24,33 @@ function initMap() {
         position: dublin,
         map: map
     });
+    console.log("here");
+    //bike layer, show the bicycling route situation
+    var bikeLayer = new google.maps.BicyclingLayer();
+    bikeLayer.setMap(map);
 
+    //get data from bikes api~~~~
+    var result = [];
     $.getJSON("http://127.0.0.1:5000/stations", null, function (data) {
         if ('stations' in data) {
-            console.log(stations);
+            console.log("here");
             var stations = data.stations;
-            _.forEach(stations, function (station) {
-                var marker = new google.maps.marker({
+            console.log(stations);
+            stations.forEach(function (station) {
+                console.log(station.id);
+                var marker = new google.maps.Marker({
                     position: {
                         lat: station.position_lat,
                         lng: station.position_lng
                     },
                     map: map,
                     title: station.name,
-                    station_number: station.number
+                    station_id: station.id
                 });
-//                marker.addEventListener("click", fnction() {
-//                    drawsStationChartsWeekly(this);
-//                });
-            });
+            })
         }
     });
-    //
+    //    
     //    // The marker, positioned at dublin
     //    var bikeLayer = new google.maps.BicyclingLayer();
     //    bikeLayer.setMap(map);
