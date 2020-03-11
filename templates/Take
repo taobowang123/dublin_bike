@@ -1,0 +1,79 @@
+!Doctype html>
+<html>
+
+<head>
+    <style>
+        ul {
+            list-style-type: none;
+            display: block;
+            width: 60px;
+            margin: 0;
+            padding: 0;
+            /*            background-color: #dddddd;*/
+            position: fixed;
+            top: 0;
+            width: 100%
+        }
+
+        li {
+            float: left;
+        }
+
+        a {
+            display: block;
+            color: wheat;
+            padding: 16px;
+            text-decoration: none;
+            background-color: #333;
+            ;
+        }
+
+        nav {
+            background-color: yellow;
+            list-style-type: none;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav li {
+            display: inline-block;
+            font-size: 20px;
+            padding: 20px;
+        }
+
+        p {
+            text-align: center;
+            padding: 20px;
+        }
+
+        body {
+            background-color: aliceblue;
+
+            background-size: auto;
+            background-position: center;
+
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <h1>
+        <ul>
+            <li><a href="home.html">Home</a></li>
+            <li><a href="#Take.html">About</a></li>
+            <li><a href="#Return">Gallery</a></li>
+            
+
+
+        </ul>
+
+
+       
+
+
+</body>
+
+</html>
