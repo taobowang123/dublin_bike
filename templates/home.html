@@ -42,6 +42,11 @@
         </div>
     </div>
 
+    <select id="station-dropdown" name="station">
+    </select>
+
+
+
     <!--line to the JS-->
     <script type=text/javascript src="/static/js/app.js"></script>
 
@@ -158,6 +163,29 @@
         function scrollWin() {
             document.getElementById('infoTitle').scrollIntoView();
         }
+
+
+        function showdropdown() {
+
+            let dropdown = document.getElementById('station-dropdown');
+            dropdown.length = 0;
+
+
+            var url = '../static/station.json';
+
+            const request = new XMLHttpRequest();
+            request.open('GET', url, true);
+
+            request.onload = function() {
+                    if (request.status === 200) {
+                        const data = JSON.parse(request.responseText);
+
+
+                        request.send();
+
+
+
+                    }
 
     </script>
 </body>
