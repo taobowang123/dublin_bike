@@ -1,3 +1,22 @@
+//dropdwon button
+function showdropdown() {
+    $.getJSON("http://127.0.0.1:5000/stations", null, function (data) {
+        if ('stations' in data) {
+            var select_station = "";
+            var stations = data.stations;
+            stations.forEach(function (station) {
+                var station_name = station.name;
+
+                select_station += "<li>" + station_name + "</li>";
+            })
+            console.log(select_station);
+            document.getElementById("dropdown_station_name").innerHTML = select_station;
+        }
+    })
+}
+
+
+
 // Initialize and add the map
 // declare constants and global variables
 st_number = 0;
