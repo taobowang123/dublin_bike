@@ -1,4 +1,4 @@
-//dropdwon button
+//dropDown button
 function showdropdown() {
     $.getJSON("http://127.0.0.1:5000/stations", null, function (data) {
         if ('stations' in data) {
@@ -12,6 +12,15 @@ function showdropdown() {
             console.log(select_station);
             document.getElementById("dropdown_station_name").innerHTML = select_station;
         }
+    })
+    .done(function(){
+    console.log("second success");
+    })
+    .fail(function(){
+    console.log("error");
+    })
+    .always(function(){
+    console.log("complete");
     })
 }
 
@@ -114,10 +123,157 @@ function initMap() {
                             infowindow.open(map, marker);
 
                         }
-                    });
+                    })
+                    .done(function(){
+                    console.log("second success");
+                    })
+                    .fail(function(){
+                    console.log("error");
+                    })
+                    .always(function(){
+                    console.log("complete");
+                    })
                 }
-
             })
         }
-    });
+    })
+    .done(function(){
+    console.log("second success");
+    })
+    .fail(function(){
+    console.log("error");
+    })
+    .always(function(){
+    console.log("complete");
+    })
+}
+
+      // Load the Visualization API and the corechart package.
+google.charts.load('current', {'packages':['corechart']});
+
+      // Set a callback to run when the Google Visualization API is loaded.
+google.charts.setOnLoadCallback(drawChart);
+function drawWeekChart(){
+    $.getJSON("http://127.0.0.1:5000/station_occupancy_weekly/43",null,function (data) {
+
+        if ('available_bike_stands' in data) {
+        console.log("hahaha");
+        var available_bike_stands = data.available_bike_stands;
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'weekday');
+        data.addColumn('number', 'available bike stands');
+        data.addRows([
+          ['Mon', available_bike_stands['Mon']],
+          ['Tue', available_bike_stands['Tue']],
+          ['Wed', available_bike_stands['Wed']],
+          ['Thurs', available_bike_stands['Thurs']],
+          ['Fri', available_bike_stands['Fri']],
+          ['Sat', available_bike_stands['Sat']],
+          ['Sun', available_bike_stands['Sun']],
+        ]);
+        var options = {
+        chart: {
+            title: 'Bikes vs. Time',
+            subtitle: 'Weekly display of available bikes'
+        },
+        height: 400,
+        legend: {
+            position: 'top',
+            maxLines: 3
+        },
+        animation: {
+            duration: 1000,
+            easing: 'out'
+        },
+        colors: chart_colors,
+        bar: {
+            groupWidth: '75%'
+        },
+        isStacked: true,
+        backgroundColor: backgroundColor
+        };
+        var chart = new google.visualization.ColumnChart(document.getElementById('charttest'));
+        chart.draw(data, options);
+        }
+    })
+    .done(function(){
+    console.log("second success");
+    })
+    .fail(function(){
+    console.log("error");
+    })
+    .always(function(){
+    console.log("complete");
+    })
+}
+
+function drawHourChart(){
+    $.getJSON("http://127.0.0.1:5000/station_occupancy_hourly/42",null,function (data) {
+
+        if ('available_bike_stands' in data) {
+        console.log("hahaha");
+        var available_bike_stands = data.available_bike_stands;
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'hours');
+        data.addColumn('number', 'available bike stands');
+        data.addRows([
+          ['0', available_bike_stands["0"]],
+          ['1', available_bike_stands["1"]],
+          ['2', available_bike_stands["2"]],
+          ['3', available_bike_stands["3"]],
+          ['4', available_bike_stands["4"]],
+          ['5', available_bike_stands["5"]],
+          ['6', available_bike_stands["6"]],
+          ['7', available_bike_stands["7"]],
+          ['8', available_bike_stands["8"]],
+          ['9', available_bike_stands["9"]],
+          ['10', available_bike_stands["10"]],
+          ['11', available_bike_stands["11"]],
+          ['12', available_bike_stands["12"]],
+          ['13', available_bike_stands["13"]],
+          ['14', available_bike_stands["14"]],
+          ['15', available_bike_stands["15"]],
+          ['16', available_bike_stands["16"]],
+          ['17', available_bike_stands["17"]],
+          ['18', available_bike_stands["18"]],
+          ['19', available_bike_stands["19"]],
+          ['20', available_bike_stands["20"]],
+          ['21', available_bike_stands["21"]],
+          ['22', available_bike_stands["22"]],
+
+        ]);
+        var options = {
+        chart: {
+            title: 'Bikes vs. Time',
+            subtitle: 'Weekly display of available bikes'
+        },
+        height: 400,
+        legend: {
+            position: 'top',
+            maxLines: 3
+        },
+        animation: {
+            duration: 1000,
+            easing: 'out'
+        },
+        colors: chart_colors,
+        bar: {
+            groupWidth: '75%'
+        },
+        isStacked: true,
+        backgroundColor: backgroundColor
+        };
+        var chart = new google.visualization.ColumnChart(document.getElementById('charttest'));
+        chart.draw(data, options);
+        }
+    })
+    .done(function(){
+    console.log("second success");
+    })
+    .fail(function(){
+    console.log("error");
+    })
+    .always(function(){
+    console.log("complete");
+    })
 }
