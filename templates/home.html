@@ -1,5 +1,8 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
+
+
+
 
 <head>
     <meta charset="utf-8">
@@ -11,18 +14,39 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 </head>
 
+
+
 <body>
-    <h3>My Google Maps Demo hello world</h3>
-    <!--The div element for the map -->
+
+    <header id="header">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-6"> <strong class="logo"> <a href="/"> <img src="../static/images/dublinbike3.jpg" alt="Dublin Bike Home" width="284" height="150"> </a> </strong> </div>
+
+            </div>
+        </div>
+    </header>
+    <h3><img src="../static/images/stationmap.jpg">
+
+        Station Map
+    </h3>
+
+    <!--the div element for the map-->
+
     <div id="map_location"></div>
+
     <button id="drop_down_location">location</button>
 
-    <!--this is the dropdown button-->
+    <!--thisis the drop downbutton-->
+
     <div class="container">
+
+
+
         <h2>List of Stations</h2>
         <p>Click to get the list of all the stations</p>
 
@@ -34,10 +58,37 @@
         </div>
     </div>
 
-    <button onclick="drawWeekChart()">test</button>
-    <button onclick="drawHourChart()">test</button>
-    <div id="charttest"></div>
 
+
+    <button onclick="drawWeekChart()">weekchart</button>
+    <button onclick="drawHourChart()">hourchart</button>
+
+    <div id="charttest"></div>
+    <div id="mainContent">
+        <div id="tab">
+            <ul>
+                <li>Select Time</li>
+            </ul>
+        </div>
+
+        <form method="post" id="optionsForm" name="optionsForm" action="time">
+            <label>Day:</label>
+            <select id="day" name="day">
+                <option value="Monday">Monday</option>
+                <option value="Tuesday">Tuesday</option>
+                <option value="Wednesday">Wednesday</option>
+                <option value="Thursday">Thursday</option>
+                <option value="Friday">Friday</option>
+                <option value="Saturday">Saturday</option>
+                <option value="Sunday">Sunday</option>
+
+
+            </select>
+            <label>Time:</label>
+            <input id="time" type=time min=00:00 max=23:30 step=1800 value=12:00 name="time">
+            <input type="submit" value="Go" class="submitBtn">
+        </form>
+    </div>
     <select id="station-dropdown" name="station">
     </select>
 
@@ -53,7 +104,15 @@
 -->
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCdlLCjk9Oyl2sflPmTk6OjJA0n7e9E7ac&callback=initMap">
 
+
+
     </script>
+
+
 </body>
+<footer>
+    <p>Copyright 2020 Aji Kurian , Botao Wang , Peisong Han. All Rights Reserved.</p>
+</footer>
+
 
 </html>
