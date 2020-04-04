@@ -1,8 +1,8 @@
-from flask import Flask, render_template, jsonify
-from model import Session, Station, Bike
 import pandas as pd
-import json
 import pymysql
+import json
+from flask import Flask, render_template, jsonify
+from model import Session
 
 app = Flask(__name__)
 @app.route('/')
