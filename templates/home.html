@@ -45,34 +45,23 @@
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenu1" id="dropdown_station_name"></ul>
                 </div>
-                <div id="charttest"></div>
-                <div id="mainContent">
-                    <form method="post" id="optionsForm" name="optionsForm" action="time">
-                        <label>Day:</label>
-                        <select id="day" name="day">
-                            <option value="Monday">Monday</option>
-                            <option value="Tuesday">Tuesday</option>
-                            <option value="Wednesday">Wednesday</option>
-                            <option value="Thursday">Thursday</option>
-                            <option value="Friday">Friday</option>
-                            <option value="Saturday">Saturday</option>
-                            <option value="Sunday">Sunday</option>
 
-
-                        </select>
-                        <label>Time:</label>
-                        <input id="time" type=time min=00:00 max=23:30 step=1800 value=12:00 name="time">
-                        <input type="submit" value="Go" class="submitBtn">
-                    </form>
+                <ul class="nav nav-tabs">
+                      <li class="active"><a href="#History_Data" data-toggle="tab">History Data</a></li>
+                      <li><a href="#Prediction_Data" data-toggle="tab">Prediction Data</a></li>
+                </ul>
+                <div class="tab-content">
+                      <div class="tab-pane active " id="History_Data">
+                            <div id="charttest"></div>
+                          </div>
+                      <div class="tab-pane" id="Prediction_Data">
+                        <input type="datetime-local" id="myLocalDate" value="2020-04-01T08:00:00">
+                        <p>click</p>
+                        <button onclick="get_time()">click</button>
+                        <p id="demo"></p>
+                    </div>
                 </div>
-
-
-                <button>History Data</button>
-                <button>Prediction Data</button>
-
-
             </div>
-
         </div>
     </div>
 
