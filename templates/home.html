@@ -15,7 +15,7 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 </head>
 
-<body>
+<body onload="init_station_dropdown()">
     <!--header-->
     <div class="container-fluid">
         <div class="row">
@@ -38,7 +38,7 @@
             <div class="col-lg-8 col-md-8 col-sm-12" id="map_location"></div>
             <div class="col-lg-4 col-md-4 col-sm-12" id="info_content">
                 <p>Click to get the list of all the stations</p>
-
+                <select id="station-dropdown" name="station-dropdown"></select>
                 <div class="dropdown">
                     <button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown" onclick="showdropdown()">
                         Stations
@@ -54,11 +54,18 @@
                       <div class="tab-pane active " id="History_Data">
                             <div id="charttest"></div>
                           </div>
-                      <div class="tab-pane" id="Prediction_Data">
-                        <input type="datetime-local" id="myLocalDate" value="2020-04-01T08:00:00">
-                        <p>click</p>
-                        <button onclick="get_time()">click</button>
-                        <p id="demo"></p>
+                    <div class="tab-pane" id="Prediction_Data">
+                        <input type="radio" name="requirement" value="take" checked>Take
+                        <input type="radio" name="requirement" value="return">Return
+                        <p>Date:</p>
+                        <input type="date" id="predict-date" name="predict-date" value="2020-04-01">
+                        <p>Time:</p>
+                        <input type="time" id="predict-time" name="predict-time" value="13:30" min="05:00" max="23:00" required>
+                        <br>
+                        <button onclick="predict_bikes()">Show available bikes</button>
+                        <br>
+                        <label> Number of available bikes:</label>
+                        <label id="available-bikes"></label>
                     </div>
                 </div>
             </div>

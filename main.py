@@ -1,3 +1,5 @@
+import datetime
+
 import pandas as pd
 import pymysql
 import json
@@ -65,6 +67,24 @@ def get_occupancy_hourly(station_id):
     mean_available_bikes.index=hours
     print(mean_available_bikes)
     return (mean_available_stands.to_json())
+
+import pickle
+import pandas as pd
+import numpy as np
+from sklearn.linear_model import LinearRegression
+
+@app.route('/predic/<int:station_id>/<requirement>/<predict_date>/<predict_time>')
+def predict_available_bikes(station_id, requirement, predict_date, predict_time):
+    with open('./prediction_model/models/' + str(station_id) + '_station_model.pkl', 'rb') as handle:
+        model = pickle.load(handle)
+    year, month, day = (int(x) for x in predict_date.split('-'))
+    dayofweek = int(datetime.date(year, month, day).weekday())
+    hour = int(predict_time[0:2])
+    rain = 0
+    x_test = [[dayofweek, hour, rain]]
+    prediction = model.predict(x_test)
+    result = round(prediction[0])
+    return jsonify(result)
 
 if __name__ == '__main__':
     app.run(debug=True)

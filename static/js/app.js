@@ -1,16 +1,13 @@
-//dropDown button
-function showdropdown() {
+// Init station dropDown.
+function init_station_dropdown() {
     $.getJSON("http://127.0.0.1:5000/stations", null, function (data) {
             if ('stations' in data) {
-                var select_station = "";
+                var options_station = "";
                 var stations = data.stations;
                 stations.forEach(function (station) {
-                    var station_name = station.name;
-
-                    select_station += "<li>" + station_name + "</li>";
+                    options_station += "<option value=" + station.id + ">" + station.name + "</option>";
                 })
-                console.log(select_station);
-                document.getElementById("dropdown_station_name").innerHTML = select_station;
+                document.getElementById("station-dropdown").innerHTML = options_station;
             }
         })
         .done(function () {
@@ -23,7 +20,6 @@ function showdropdown() {
             console.log("complete");
         })
 }
-
 
 
 // Initialize and add the map
@@ -282,8 +278,30 @@ function drawHourChart() {
 }
 
 
-function get_time() {
-    var x = document.getElementById("myLocalDate").value;
-    console.log("get time")
-    document.getElementById("demo").innerHTML = x;
+function predict_bikes() {
+    var station_id = document.getElementById("station-dropdown").value;
+    var date = document.getElementById("predict-date").value;
+    var time = document.getElementById("predict-time").value;
+    var requirements = document.getElementsByName("requirement");
+    console.log(requirements);
+    var requirement = "";
+    for (i = 0; i < requirements.length; i++) {
+        if (requirements[i].checked) {
+            requirement = requirements[i].value;
+        }
+    }
+    $.getJSON("http://127.0.0.1:5000/predic/" + station_id + "/"
+        + requirement + "/" + date + "/" + time, function (data) {
+        console.log(data);
+        document.getElementById("available-bikes").innerHTML = data;
+    })
+    .done(function () {
+        console.log("second success");
+    })
+    .fail(function () {
+        console.log("error");
+    })
+    .always(function () {
+        console.log("complete");
+    })
 }
