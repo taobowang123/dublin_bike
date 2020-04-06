@@ -4,7 +4,13 @@ import pandas as pd
 import pymysql
 import json
 from flask import Flask, render_template, jsonify
+
+import weather_forecast
 from model import Session
+import threading
+
+thread_weather_forecast = threading.Thread(name='weather_forecast', target=weather_forecast.update_weather_forecast)
+thread_weather_forecast.start()
 
 app = Flask(__name__)
 @app.route('/')
@@ -29,7 +35,6 @@ def get_station_available_info(station_id):
         where station_id = {} and last_update = \
         (select max(last_update) from bike where station_id = {});".format(station_id, station_id))
     for row in rows:
-        print(row)
         available_info.append(dict(row))
     session.close()
     return jsonify(available_info=available_info)
@@ -70,8 +75,6 @@ def get_occupancy_hourly(station_id):
 
 import pickle
 import pandas as pd
-import numpy as np
-from sklearn.linear_model import LinearRegression
 
 @app.route('/predic/<int:station_id>/<requirement>/<predict_date>/<predict_time>')
 def predict_available_bikes(station_id, requirement, predict_date, predict_time):
@@ -80,7 +83,7 @@ def predict_available_bikes(station_id, requirement, predict_date, predict_time)
     year, month, day = (int(x) for x in predict_date.split('-'))
     dayofweek = int(datetime.date(year, month, day).weekday())
     hour = int(predict_time[0:2])
-    rain = 0
+    rain = weather_forecast.get_weather_forecast(year, month, day, hour)
     x_test = [[dayofweek, hour, rain]]
     prediction = model.predict(x_test)
     result = round(prediction[0])
