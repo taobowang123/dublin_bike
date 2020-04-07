@@ -1,9 +1,13 @@
-// Init station dropDown.
+// Init station dropDown button.
 function init_station_dropdown() {
     $.getJSON("http://127.0.0.1:5000/stations", null, function (data) {
             if ('stations' in data) {
-                var options_station = "";
+                var options_station = "<option>station select</option>";
                 var stations = data.stations;
+//                sort by the alphabetical order
+                stations.sort(function(a,b){
+                    return a.name.localeCompare(b.name);
+                });
                 stations.forEach(function (station) {
                     options_station += "<option value=" + station.id + ">" + station.name + "</option>";
                 })
@@ -11,15 +15,27 @@ function init_station_dropdown() {
             }
         })
         .done(function () {
-            console.log("second success");
+            console.log("dropdown second success");
         })
         .fail(function () {
-            console.log("error");
+            console.log("dropdown error");
         })
         .always(function () {
-            console.log("complete");
+            console.log("dropdown complete");
         })
 }
+
+//when select dropdown button....
+function select_dropdown(){
+    var station_id = document.getElementById("station-dropdown").value;
+//  when click the marker, the chart will be shown
+    drawWeekChart(station_id);
+    drawHourChart(station_id);
+    return function () {
+        map.setZoom(20);
+        }
+}
+
 
 
 // Initialize and add the map
@@ -33,17 +49,16 @@ var heatmap;
 
 //init setup the google map
 function initMap() {
-
     // The location of dublin
     var dublin = {
-        lat: 53.3575945,
-        lng: -6.2613842
+        lat: 53.35,
+        lng: -6.26
     };
 
     // The map, centered at dublin
     var map = new google.maps.Map(
         document.getElementById('map_location'), {
-            zoom: 12,
+            zoom: 13,
             center: dublin,
             mapTypeId: 'roadmap'
         });
@@ -71,9 +86,12 @@ function initMap() {
                         title: station.name,
                         station_id: station.id
                     });
+                    console.log("what is marker",marker);
 
                     marker.addListener('click', function () {
-
+//                        when click the marker, the chart will be shown
+                        drawWeekChart(station_id);
+                        drawHourChart(station_id);
                         var contentString = '<div id="content">';
                         contentString +=
                             '<p>station\'s name:' + station.name + '</p>' +
@@ -81,8 +99,6 @@ function initMap() {
                             '<p>station\'s address:' + station.address + '</p>' +
                             '<p>station\'s banking:' + station.banking + '</p>' +
                             '<p>station\'s bonus:' + station.bonus + '</p>';
-
-                        console.log("here 123345");
                         contentString2 = get_available_info(contentString, station_id);
 
                     });
@@ -152,30 +168,30 @@ google.charts.load('current', {
 // Set a callback to run when the Google Visualization API is loaded.
 google.charts.setOnLoadCallback(drawWeekChart);
 
-function drawWeekChart() {
-    $.getJSON("http://127.0.0.1:5000/station_occupancy_weekly/43", null, function (data) {
+function drawWeekChart(station_id) {
+    $.getJSON("http://127.0.0.1:5000/station_occupancy_weekly/"+ station_id, null, function (data) {
 
-            if ('available_bike_stands' in data) {
+            if ('available_bikes' in data) {
                 console.log("hahaha");
-                var available_bike_stands = data.available_bike_stands;
+                var available_bikes = data.available_bikes;
                 var data = new google.visualization.DataTable();
                 data.addColumn('string', 'weekday');
-                data.addColumn('number', 'available bike stands');
+                data.addColumn('number', 'available bikes');
                 data.addRows([
-          ['Mon', available_bike_stands['Mon']],
-          ['Tue', available_bike_stands['Tue']],
-          ['Wed', available_bike_stands['Wed']],
-          ['Thurs', available_bike_stands['Thurs']],
-          ['Fri', available_bike_stands['Fri']],
-          ['Sat', available_bike_stands['Sat']],
-          ['Sun', available_bike_stands['Sun']],
+          ['Mon', available_bikes['Mon']],
+          ['Tue', available_bikes['Tue']],
+          ['Wed', available_bikes['Wed']],
+          ['Thurs', available_bikes['Thurs']],
+          ['Fri', available_bikes['Fri']],
+          ['Sat', available_bikes['Sat']],
+          ['Sun', available_bikes['Sun']],
         ]);
                 var options = {
                     chart: {
                         title: 'Bikes vs. Time',
                         subtitle: 'Weekly display of available bikes'
                     },
-                    height: 400,
+                    height: 300,
                     legend: {
                         position: 'top',
                         maxLines: 3
@@ -191,62 +207,63 @@ function drawWeekChart() {
                     isStacked: true,
                     backgroundColor: backgroundColor
                 };
-                var chart = new google.visualization.ColumnChart(document.getElementById('charttest'));
+                var chart = new google.visualization.ColumnChart(document.getElementById('weekChart'));
                 chart.draw(data, options);
             }
         })
         .done(function () {
-            console.log("second success");
+            console.log("week available bikes second success");
         })
         .fail(function () {
-            console.log("error");
+            console.log("week available bikes error");
         })
         .always(function () {
-            console.log("complete");
+            console.log("week available bikes complete");
         })
 }
 
-function drawHourChart() {
-    $.getJSON("http://127.0.0.1:5000/station_occupancy_hourly/42", null, function (data) {
-
-            if ('available_bike_stands' in data) {
+function drawHourChart(station_id) {
+    console.log(station_id);
+    $.getJSON("http://127.0.0.1:5000/station_occupancy_hourly/"+station_id, null, function (data) {
+            console.log("hour enter?");
+            if ('available_bikes' in data) {
                 console.log("hahaha");
-                var available_bike_stands = data.available_bike_stands;
+                var available_bikes = data.available_bikes;
                 var data = new google.visualization.DataTable();
                 data.addColumn('string', 'hours');
-                data.addColumn('number', 'available bike stands');
+                data.addColumn('number', 'available bikes');
                 data.addRows([
-          ['0', available_bike_stands["0"]],
-          ['1', available_bike_stands["1"]],
-          ['2', available_bike_stands["2"]],
-          ['3', available_bike_stands["3"]],
-          ['4', available_bike_stands["4"]],
-          ['5', available_bike_stands["5"]],
-          ['6', available_bike_stands["6"]],
-          ['7', available_bike_stands["7"]],
-          ['8', available_bike_stands["8"]],
-          ['9', available_bike_stands["9"]],
-          ['10', available_bike_stands["10"]],
-          ['11', available_bike_stands["11"]],
-          ['12', available_bike_stands["12"]],
-          ['13', available_bike_stands["13"]],
-          ['14', available_bike_stands["14"]],
-          ['15', available_bike_stands["15"]],
-          ['16', available_bike_stands["16"]],
-          ['17', available_bike_stands["17"]],
-          ['18', available_bike_stands["18"]],
-          ['19', available_bike_stands["19"]],
-          ['20', available_bike_stands["20"]],
-          ['21', available_bike_stands["21"]],
-          ['22', available_bike_stands["22"]],
-
+                  ['0', available_bikes["0"]],
+                  ['1', available_bikes["1"]],
+                  ['2', available_bikes["2"]],
+                  ['3', available_bikes["3"]],
+                  ['4', available_bikes["4"]],
+                  ['5', available_bikes["5"]],
+                  ['6', available_bikes["6"]],
+                  ['7', available_bikes["7"]],
+                  ['8', available_bikes["8"]],
+                  ['9', available_bikes["9"]],
+                  ['10', available_bikes["10"]],
+                  ['11', available_bikes["11"]],
+                  ['12', available_bikes["12"]],
+                  ['13', available_bikes["13"]],
+                  ['14', available_bikes["14"]],
+                  ['15', available_bikes["15"]],
+                  ['16', available_bikes["16"]],
+                  ['17', available_bikes["17"]],
+                  ['18', available_bikes["18"]],
+                  ['19', available_bikes["19"]],
+                  ['20', available_bikes["20"]],
+                  ['21', available_bikes["21"]],
+                  ['22', available_bikes["22"]],
+                  ['23', available_bikes["23"]],
         ]);
                 var options = {
                     chart: {
                         title: 'Bikes vs. Time',
-                        subtitle: 'Weekly display of available bikes'
+                        subtitle: 'hourly display of available bikes'
                     },
-                    height: 400,
+                    height: 300,
                     legend: {
                         position: 'top',
                         maxLines: 3
@@ -262,18 +279,18 @@ function drawHourChart() {
                     isStacked: true,
                     backgroundColor: backgroundColor
                 };
-                var chart = new google.visualization.ColumnChart(document.getElementById('charttest'));
+                var chart = new google.visualization.ColumnChart(document.getElementById('hourChart'));
                 chart.draw(data, options);
             }
         })
         .done(function () {
-            console.log("second success");
+            console.log("hour available bikes second success");
         })
         .fail(function () {
-            console.log("error");
+            console.log("hour available bikes error");
         })
         .always(function () {
-            console.log("complete");
+            console.log("hour available bikes complete");
         })
 }
 

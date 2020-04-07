@@ -38,14 +38,15 @@
             <div class="col-lg-8 col-md-8 col-sm-12" id="map_location"></div>
             <div class="col-lg-4 col-md-4 col-sm-12" id="info_content">
                 <p>Choose a station:</p>
-                <select id="station-dropdown" name="station-dropdown"></select>
+                <select id="station-dropdown" name="station-dropdown" onchange="select_dropdown()" ></select>
                 <ul class="nav nav-tabs">
                       <li class="active"><a href="#History_Data" data-toggle="tab">History Data</a></li>
                       <li><a href="#Prediction_Data" data-toggle="tab">Prediction Data</a></li>
                 </ul>
                 <div class="tab-content">
                       <div class="tab-pane active " id="History_Data">
-                            <div id="charttest"></div>
+                            <div id="weekChart"></div>
+                            <div id="hourChart"></div>
                           </div>
                     <div class="tab-pane" id="Prediction_Data">
                         <input type="radio" name="requirement" value="take" checked>Take
