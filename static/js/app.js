@@ -309,7 +309,6 @@ function predict_bikes() {
     }
     $.getJSON("http://127.0.0.1:5000/predic/" + station_id + "/"
         + requirement + "/" + date + "/" + time, function (data) {
-        console.log(data);
         document.getElementById("available-bikes").innerHTML = data;
     })
     .done(function () {

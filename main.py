@@ -86,7 +86,23 @@ def predict_available_bikes(station_id, requirement, predict_date, predict_time)
     rain = weather_forecast.get_weather_forecast(year, month, day, hour)
     x_test = [[dayofweek, hour, rain]]
     prediction = model.predict(x_test)
-    result = round(prediction[0])
+    data = json.load(open('static/dublin_bike_static.json'))
+    bike_stands = 0
+    print(data)
+    for station in data:
+        print(station)
+        if station['number'] == station_id:
+            bike_stands = station['bike_stands']
+            break
+    # Predict the available bikes
+    available_bikes = round(prediction[0])
+    if available_bikes < 0:
+        available_bikes = 0
+    # Judge if taking or returning
+    if requirement == 'take':
+        result = available_bikes
+    else:
+        result = bike_stands - available_bikes
     return jsonify(result)
 
 if __name__ == '__main__':
