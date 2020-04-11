@@ -94,9 +94,7 @@ def predict_available_bikes(station_id, requirement, predict_date, predict_time)
     prediction = model.predict(x_test)
     data = json.load(open('static/dublin_bike_static.json'))
     bike_stands = 0
-    print(data)
     for station in data:
-        print(station)
         if station['number'] == station_id:
             bike_stands = station['bike_stands']
             break

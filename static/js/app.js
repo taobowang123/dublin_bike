@@ -1,6 +1,9 @@
+// Set the root location of server
+ROOT = window.location.origin;
+
 // Init station dropDown button.
 function init_station_dropdown() {
-    $.getJSON("http://127.0.0.1:5000/stations", null, function (data) {
+    $.getJSON(ROOT + "/stations", null, function (data) {
             if ('stations' in data) {
                 var options_station = "<option>station select</option>";
                 var stations = data.stations;
@@ -39,6 +42,8 @@ const chart_colors = ['#59b75c', '#e6693e', '#ec8f6e', '#f3b49f', '#f6c7b6'];
 const backgroundColor = '#fff';
 //init setup the google map
 function initMap() {
+    // Init station dropDown button.
+    init_station_dropdown()
     // The location of dublin
     var dublin = {
         lat: 53.35,
@@ -56,7 +61,7 @@ function initMap() {
     bikeLayer.setMap(map);
     //get data from bikes api~~~~
     var result = [];
-    $.getJSON("http://127.0.0.1:5000/stations", null, function (data) {
+    $.getJSON(ROOT + "/stations", null, function (data) {
             if ('stations' in data) {
                 var stations = data.stations;
                 stations.forEach(function (station) {
@@ -86,7 +91,7 @@ function initMap() {
                     });
                     //get available bikes and stands information
                     function get_available_info(contentString, station_id) {
-                        $.getJSON("http://127.0.0.1:5000/available/" + station_id, function (data) {
+                        $.getJSON(ROOT + "/available/" + station_id, function (data) {
                                 if ('available_info' in data) {
                                     var available_info = data.available_info;
                                     var available_bike_stands = available_info[0].available_bike_stands;
@@ -135,7 +140,7 @@ google.charts.load('current', {
 //google.charts.setOnLoadCallback(drawWeekChart);
 
 function drawWeekChart(station_id) {
-    $.getJSON("http://127.0.0.1:5000/station_occupancy_weekly/"+ station_id, null, function (data) {
+    $.getJSON(ROOT + "/station_occupancy_weekly/"+ station_id, null, function (data) {
             if ('available_bikes' in data) {
                 var available_bikes = data.available_bikes;
                 var data = new google.visualization.DataTable();
@@ -187,7 +192,7 @@ function drawWeekChart(station_id) {
 }
 //draw hour available bike chart
 function drawHourChart(station_id) {
-    $.getJSON("http://127.0.0.1:5000/station_occupancy_hourly/"+station_id, null, function (data) {
+    $.getJSON(ROOT + "/station_occupancy_hourly/"+station_id, null, function (data) {
             if ('available_bikes' in data) {
                 var available_bikes = data.available_bikes;
                 var data = new google.visualization.DataTable();
@@ -268,7 +273,7 @@ function predict_bikes() {
             requirement = requirements[i].value;
         }
     }
-    $.getJSON("http://127.0.0.1:5000/predic/" + station_id + "/"
+    $.getJSON(ROOT + "/predic/" + station_id + "/"
         + requirement + "/" + date + "/" + time, function (data) {
         document.getElementById("available-bikes").innerHTML = data;
     })
