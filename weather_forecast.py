@@ -5,6 +5,7 @@ import time
 
 weather_data = None
 
+# Function for updating weather automatically
 def update_weather_forecast():
     while True:
         url = "http://api.openweathermap.org/data/2.5/forecast"
@@ -14,6 +15,7 @@ def update_weather_forecast():
         # Set the interval
         time.sleep(60 * 60 * 1)
 
+# Function for get weather by a specific date and time
 def get_weather_forecast(year, month, day, hour):
     dtime = datetime.datetime(year, month, day, hour)
     unixtime = time.mktime(dtime.timetuple())

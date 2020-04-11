@@ -47,23 +47,24 @@
                     <li><a href="#Prediction_Data" data-toggle="tab">Prediction Data</a></li>
                 </ul>
                 <div class="tab-content">
-                     <div class="tab-pane active " id="History_Data">
-                    <div id="weekChart"></div>
-                    <div id="hourChart"></div>
-                </div>
-                <div class="tab-pane" id="Prediction_Data">
-                    <input type="radio" name="requirement" value="take" checked>Take
-                    <input type="radio" name="requirement" value="return">Return
-                    <h2>Date:</h2>
-                    <input type="date" id="predict-date" name="predict-date" value="2020-04-01">
-                    <h2>Time:</h2>
-                    <input type="time" id="predict-time" name="predict-time" value="13:30" min="05:00" max="23:00" required>
-                    <br>
-                    <button onclick="predict_bikes()">Show available bikes</button>
-                    <br>
-                    <label> Number of available bikes:</label>
-                    <label id="available-bikes"></label>
-                </div>
+                    <!--tab for history data-->
+                    <div class="tab-pane active " id="History_Data">
+                        <div id="weekChart"></div>
+                        <div id="hourChart"></div></div>
+                    <!--tab for prediction data-->
+                    <div class="tab-pane" id="Prediction_Data">
+                        <input type="radio" name="requirement" value="take" checked>Take
+                        <input type="radio" name="requirement" value="return">Return
+                        <h2>Date:</h2>
+                        <input type="date" id="predict-date" name="predict-date" value="2020-04-01">
+                        <h2>Time:</h2>
+                        <input type="time" id="predict-time" name="predict-time" value="13:30" min="05:00" max="23:00" required>
+                        <br>
+                        <button onclick="predict_bikes()">Show available bikes</button>
+                        <br>
+                        <label> Number of available bikes:</label>
+                        <label id="available-bikes"></label>
+                    </div>
                 </div>
             </div>
         </div>

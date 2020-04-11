@@ -13,10 +13,12 @@ thread_weather_forecast = threading.Thread(name='weather_forecast', target=weath
 thread_weather_forecast.start()
 
 app = Flask(__name__)
+# Handler for home page
 @app.route('/')
 def home():
     return render_template('home.html')
 
+# Handler for stations information
 @app.route('/stations')
 def get_station():
     session = Session()
@@ -27,6 +29,7 @@ def get_station():
     session.close()
     return jsonify(stations=stations)
 
+# Handler for station available details
 @app.route('/available/<int:station_id>')
 def get_station_available_info(station_id):
     session = Session()
@@ -39,6 +42,7 @@ def get_station_available_info(station_id):
     session.close()
     return jsonify(available_info=available_info)
 
+# Handler for station occupancy weekly data
 @app.route('/station_occupancy_weekly/<int:station_id>')
 def get_occupancy_weekly(station_id):
     conn = pymysql.connect(host='dbbikes.cw9hkqmrhrqy.eu-west-1.rds.amazonaws.com', user='root', password='hanpeisong',
@@ -57,6 +61,7 @@ def get_occupancy_weekly(station_id):
     mean_available_bikes.index=days
     return (mean_available_bikes.to_json())
 
+# Handler for station occupancy hourly data
 @app.route('/station_occupancy_hourly/<int:station_id>')
 def get_occupancy_hourly(station_id):
     conn = pymysql.connect(host='dbbikes.cw9hkqmrhrqy.eu-west-1.rds.amazonaws.com', user='root', password='hanpeisong',
@@ -76,6 +81,7 @@ def get_occupancy_hourly(station_id):
 import pickle
 import pandas as pd
 
+# Handler for station occupancy prediction
 @app.route('/predic/<int:station_id>/<requirement>/<predict_date>/<predict_time>')
 def predict_available_bikes(station_id, requirement, predict_date, predict_time):
     with open('./prediction_model/models/' + str(station_id) + '_station_model.pkl', 'rb') as handle:

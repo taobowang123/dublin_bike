@@ -255,6 +255,7 @@ function drawHourChart(station_id) {
         })
 }
 
+// Request for prediction data
 function predict_bikes() {
     var station_id = document.getElementById("station-dropdown").value;
     var date = document.getElementById("predict-date").value;

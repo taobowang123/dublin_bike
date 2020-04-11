@@ -19,6 +19,7 @@ class Station(Base):
     bonus = Column(Boolean, nullable=True)
     contract_name = Column(String(100), nullable=False)
 
+# Define the Bike class
 class Bike(Base):
     # The name of table.
     __tablename__ = "bike"
@@ -31,6 +32,7 @@ class Bike(Base):
     available_bikes = Column(Integer, nullable=False)
     last_update = Column(DateTime, nullable=False)
 
+# Define the Weather class
 class Weather(Base):
     # The name of table.
     __tablename__ = "weather"
