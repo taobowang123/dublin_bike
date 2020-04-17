@@ -74,6 +74,9 @@ function initMap() {
                         map: map,
                         title: station.name,
                         station_id: station.id
+//                        icon:{
+//                        color: '#00CCBC'
+//                        },
                     });
                     //add marker listener
                     marker.addListener('click', function () {

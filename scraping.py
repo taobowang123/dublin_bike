@@ -5,41 +5,29 @@ import threading  # to repeatedly get the data from the web
 import time  # to change the timestamp to normal time
 from model import Session, Station, Bike, Weather
 
-
+# this function is to scrape bikes
 def scraping_bikes(api_key):
     """Function to scrape Dublin Bikes using API
      and insert returned data to the database in json format"""
-    # try:
     uri = "https://api.jcdecaux.com/vls/v1/stations"
     # Formatting request structure
     r = requests.get(uri, params={'contract': 'DUBLIN', 'apiKey': api_key_bikes})
     stations_to_db(r.text)  # api to database
 
-    # except:
-    #     #if htere is any problem, print hte traceback
-    #     print(traceback.format_exc())
-
-
+# this function is to scrape weather
 def scraping_weather(api_key):
     """Function to scrape Dublin Bikes using API
      and insert returned data to the database in json format"""
-    # try:
     uri = "http://api.openweathermap.org/data/2.5/weather"
     # Formatting request structure
     r = requests.get(uri, params={'q': 'DUBLIN,IE', 'appid': api_key_weather})
     weather_to_db(r.text)  # api to database
-
-    # except:
-    #     #if htere is any problem, print hte traceback
-    #     print(traceback.format_exc())
-
     return
 
-
+# this function is to write data into database
 def stations_to_db(data):
     session = Session()
     stations = json.loads(data)
-    print(type(stations), len(stations))
     for station in stations:
         timestamp = station.get('last_update')
         time_standard = timestamp_convert(timestamp)
@@ -56,15 +44,11 @@ def stations_to_db(data):
     session.close()
     return
 
-
+# this function is to write data into database
 def weather_to_db(data):
     session = Session()
     weather = json.loads(data)
-    print(weather)
-    print(type(weather), len(weather))
-
     timestamp_dt = weather.get('dt')
-    print(timestamp_dt)
     time_standard_dt = timestamp_convert(timestamp_dt)
     timestamp_sunrise = weather.get('sys').get('sunrise')
     time_standard_surise = timestamp_convert(timestamp_sunrise)
@@ -106,7 +90,6 @@ def weather_to_db(data):
     return
 
 # this class is used for loop calling the function,rewrite the run method
-
 def timestamp_convert(timestamp):
     if len(str(timestamp)) == 13:
         timeStamp = str(timestamp)[:-3]
@@ -116,7 +99,6 @@ def timestamp_convert(timestamp):
         localTime = time.localtime(int(timestamp))
         strTime = time.strftime("%Y-%m-%d %H:%M:%S", localTime)
     return strTime
-
 
 class RepeatingTimer(threading.Timer):
     def run(self):
