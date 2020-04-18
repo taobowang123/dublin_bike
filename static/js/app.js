@@ -1,18 +1,19 @@
 // Set the root location of server
 ROOT = window.location.origin;
-
+var map;
+var marker;
 // Init station dropDown button.
 function init_station_dropdown() {
     $.getJSON(ROOT + "/stations", null, function (data) {
             if ('stations' in data) {
-                var options_station = "<option>station select</option>";
+                var options_station;
                 var stations = data.stations;
                 //sort by the alphabetical order
                 stations.sort(function(a,b){
                     return a.name.localeCompare(b.name);
                 });
                 stations.forEach(function (station) {
-                    options_station += "<option value=" + station.id + ">" + station.name + "</option>";
+                    options_station += "<option value=" + station.id +","+station.position_lat+","+station.position_lng+">" + station.name + "</option>";
                 })
                 document.getElementById("station-dropdown").innerHTML = options_station;
             }
@@ -30,10 +31,16 @@ function init_station_dropdown() {
 
 //when select dropdown button....
 function select_dropdown(){
-    var station_id = document.getElementById("station-dropdown").value;
+    var result = document.getElementById("station-dropdown").value.split(",");
+    var station_id=result[0];
+    var position_lat=result[1];
+    var position_lng=result[2];
 //  when click the marker, the chart will be shown
     drawWeekChart(station_id);
     drawHourChart(station_id);
+    var point = new google.maps.LatLng(position_lat,position_lng);
+    map.panTo(point);
+    map.setZoom(16)
 }
 
 // Initialize and add the map
@@ -50,7 +57,7 @@ function initMap() {
         lng: -6.26
     };
     // The map, centered at dublin
-    var map = new google.maps.Map(
+    map = new google.maps.Map(
         document.getElementById('map_location'), {
             zoom: 13,
             center: dublin,
@@ -66,8 +73,7 @@ function initMap() {
                 var stations = data.stations;
                 stations.forEach(function (station) {
                     var station_id = station.id;
-                    console.log("here");
-                    var marker = new google.maps.Marker({
+                    marker = new google.maps.Marker({
                         position: {
                             lat: station.position_lat,
                             lng: station.position_lng

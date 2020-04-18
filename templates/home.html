@@ -42,7 +42,7 @@
             <div class="col-lg-4 col-md-4 col-sm-12" id="info_content">
                 <h1>Select a Station You want to know:</h1>
                 <!--drop_down button-->
-                <select id="station-dropdown" name="station-dropdown" onchange="select_dropdown()" ></select>
+                <select id="station-dropdown" name="station-dropdown" onclick="select_dropdown()" ></select>
                 <!--tab selection-->
                 <ul class="nav nav-tabs">
                     <li class="active"><a href="#History_Data" data-toggle="tab" id="tab_content">History Data</a></li>
@@ -55,8 +55,8 @@
                         <div id="hourChart"></div></div>
                     <!--tab for prediction data-->
                     <div class="tab-pane" id="Prediction_Data">
-                        <div style="font-size:20px"><input type="radio" name="requirement" value="take" checked id="option">Take</div>
-                        <div style="font-size:20px"><input type="radio" name="requirement" value="return" id="option">Return</div>
+                        <div style="font-size:20px"><input type="radio" name="requirement" value="take" checked id="option">Take- get available bikes information</div>
+                        <div style="font-size:20px"><input type="radio" name="requirement" value="return" id="option">Return- get available stands information</div>
                         <h2 style="font-size:20px">Date:</h2>
                         <input type="date" id="predict-date" name="predict-date" value="2020-04-20" style="font-size:20px">
                         <h2 style="font-size:20px">Time:</h2>
@@ -65,7 +65,7 @@
                         <button onclick="predict_bikes()" style="font-size:20px">Show available number</button>
                         <br>
                         <label style="font-size:20px"> The available number:</label>
-                        <label id="available-bikes"></label>
+                        <label id="available-bikes" style="font-size:20px"></label>
                     </div>
                 </div>
             </div>
