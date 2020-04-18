@@ -270,7 +270,8 @@ function drawHourChart(station_id) {
 
 // Request for prediction data
 function predict_bikes() {
-    var station_id = document.getElementById("station-dropdown").value;
+    var result = document.getElementById("station-dropdown").value.split(",");
+    var station_id=result[0];
     var date = document.getElementById("predict-date").value;
     var time = document.getElementById("predict-time").value;
     var requirements = document.getElementsByName("requirement");
