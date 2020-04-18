@@ -1,10 +1,13 @@
 /* Set the size of the div element that contains the map */
 #header {
     background: #008B8B;
-    overflow: hidden;
-    border-bottom: solid 1px #232323;
-    height: 0px;
-    padding-bottom: 100px;
+
+}
+
+#header_word {
+    text-align: center;
+    font-size: 30px;
+    padding-top: 20px;
 }
 
 #weather_info {
@@ -18,8 +21,14 @@
     border: 4px solid #6a9eae;
 }
 
+/*tab*/
+#tab_content {
+    font-size: 20px;
+}
+
 html,
 body {
+    width: 100%;
     background-color: #114d57;
     font-family: 'Alegreya Sans', sans-serif;
     background-repeat: no-repeat;
@@ -27,25 +36,6 @@ body {
     background-attachment: fixed;
     font-size: 14px;
 
-}
-
-h2 {
-    font-family: 'Nunito', serif;
-    color: #ffffff;
-    font-weight: 500;
-    font-size: 300%;
-    text-align: center;
-    display: inline-block;
-    padding: 10px 5px;
-    padding-left: 20px;
-}
-
-h3 {
-    margin: 5px 0px;
-    font-size: 150%;
-    font-family: Arial, Helvetica, sans-serif;
-    color: #6a9eae;
-    text-align: center;
 }
 
 form {
@@ -61,4 +51,5 @@ form {
     color: black;
     font-size: 15px;
     background-color: darkcyan;
+    text-align: center;
 }

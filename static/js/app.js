@@ -66,6 +66,7 @@ function initMap() {
                 var stations = data.stations;
                 stations.forEach(function (station) {
                     var station_id = station.id;
+                    console.log("here");
                     var marker = new google.maps.Marker({
                         position: {
                             lat: station.position_lat,
@@ -74,10 +75,8 @@ function initMap() {
                         map: map,
                         title: station.name,
                         station_id: station.id
-//                        icon:{
-//                        color: '#00CCBC'
-//                        },
                     });
+
                     //add marker listener
                     marker.addListener('click', function () {
                         // when click the marker, the chart will be shown
